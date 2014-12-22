@@ -157,8 +157,9 @@ namespace VehicalClassDemo
                                    Visible = true
                                    
                               });
-                              this.Controls.Add(TextBoxList.Last());
-                              MessageBox.Show("Past adding");
+                              this.Controls.Add(TextBoxList[4]);
+                              //this.Controls.Add(TextBoxList.Last());
+                              //MessageBox.Show("Past adding");
 
                               
                          break;
@@ -213,17 +214,12 @@ namespace VehicalClassDemo
 
                // Create an instance of the FormVehicalStats class
                FormVehicalStats myFormVehicalForm = new FormVehicalStats();
-
-               //myFormVehicalForm.labelMakeData.Text = TextBoxList[0].Text.ToString();
-               //myFormVehicalForm.labelMakeData.Text = ListVehicals[0].Make;
-               //myFormVehicalForm.labelMakeData.Text = "Rumble";
-               
+        
                // Resize the form
                myFormVehicalForm.Size = new Size(555, 425);
                
                // Display the form
               // myFormVehicalForm.ShowDialog();
-
 
 
                foreach (Vehical automobile in ListVehicals)
@@ -232,12 +228,16 @@ namespace VehicalClassDemo
                     myFormVehicalForm.labelModelData.Text = automobile.Model;
                     myFormVehicalForm.labelPriceData.Text = automobile.Price;
                     myFormVehicalForm.labelYearData.Text = automobile.Year;  
+
+
+
   
                     // Add Vehical Specific Information
                     // Determine what vehical type is selected in combobox
                     /* Small Car(Luxuries) Truck(Tow Power) Suv(Options) Van(Passengers) Compact(MPG) Sports Car(Accelleration)
                     */
-                    string selectedVehcialType = comboBoxVehicalType.Text;
+                    string selectedVehcialType = automobile.Type;
+                    //MessageBox.Show(selectedVehcialType);
                     switch (selectedVehcialType)
                     {
                          case "Van":
@@ -248,22 +248,37 @@ namespace VehicalClassDemo
                               labelPassengersShow.Text = "Passengers:";
                               myFormVehicalForm.Controls.Add(labelPassengersShow);
 
+
+
+
                               // Create Passengers label with value
                               Label labelPassengersShowAmount = new Label();
-                              labelPassengersShowAmount.Location = new Point(90, 130);
-                              labelPassengersShowAmount.Text = "Goomba";
-                              //labelPassengersShowAmount.Text = TextBoxList[4].Text;
-                              myFormVehicalForm.Controls.Add(labelPassengersShowAmount);
-                              break;
+                              labelPassengersShowAmount.Location = new Point(120, 130);
+                            labelPassengersShowAmount.Update();
+  
+                              // Trouble with showing passenger value on form
+                              VehicalVan myVan = (VehicalVan)automobile;
+                              labelPassengersShowAmount.Text = myVan.Passengers.ToString();
+                            MessageBox.Show("Passenger total is: " + myVan.Passengers.ToString()); // This is getting the correct amount
+                            MessageBox.Show("labelPassenger show amount is: " + labelPassengersShowAmount.Text);
+                            // Correct info comes to here
+
+
+                           
+                            myFormVehicalForm.Controls.Add(labelPassengersShowAmount); // There is something wrong with the form not displaying the new total
+                            labelPassengersShowAmount.Update();
+
+
+                            break;
                          default:
                               
                               
-                              break;
-
-                    
+                              break;                    
                     }
                     // Display the data on each vehical
+                   myFormVehicalForm.Refresh();
                     myFormVehicalForm.ShowDialog();
+                    myFormVehicalForm.Refresh();
                }
 
                
@@ -282,8 +297,8 @@ namespace VehicalClassDemo
                // Set the textboxes to something after the clear
                TextBoxList[0].Text = "Ford";
                //TextBoxList[1].Text = "";
-               //TextBoxList[2].Text = "";
-               //TextBoxList[3].Text = "";
+               TextBoxList[2].Text = "2005";
+               TextBoxList[3].Text = "15000";
                
                Refresh();
           }
@@ -294,11 +309,15 @@ namespace VehicalClassDemo
                /* Small Car(Luxuries) Truck(Tow Power) Suv(Options) Van(Passengers) Compact(MPG) Sports Car(Accelleration)
                 */
                string selectedVehcialType = comboBoxVehicalType.Text;
+               //MessageBox.Show(selectedVehcialType);
                switch (selectedVehcialType)
                {
-                    case "Van":
+                   case "Van":
+                       //MessageBox.Show(TextBoxList.Last);
+                       //MessageBox.Show(TextBoxList[4].Text);
                          ListVehicals.Add(new VehicalVan()
                          {
+                              Type = comboBoxVehicalType.Text,
                               Make = TextBoxList[0].Text,
                               Model = TextBoxList[1].Text,
                               Year = TextBoxList[2].Text,
@@ -309,6 +328,7 @@ namespace VehicalClassDemo
                     default:
                          ListVehicals.Add(new Vehical()
                          {
+                              Type = comboBoxVehicalType.Text,
                               Make = TextBoxList[0].Text,
                               Model = TextBoxList[1].Text,
                               Year = TextBoxList[2].Text,

@@ -9,7 +9,7 @@ namespace VehicalClassDemo
      public class Vehical
      {
           // Field 
-          private string _make, _model, _year, _price;
+          private string _type, _make, _model, _year, _price;
 
           // Constructor that takes no arguments. 
           public Vehical()
@@ -18,6 +18,7 @@ namespace VehicalClassDemo
                _model = "unknown";
                _year = "unknown";
                _price = "unknown";
+               _type = "unknown";
           }
 
           // Constructor that takes one argument. 
@@ -34,17 +35,19 @@ namespace VehicalClassDemo
                set { _make = value; }
           }
           // Shorthand Properties
+          public string Type { get; set; }
           public string Model { get; set; }
           public string Year { get; set; }
           public string Price { get; set; } 
 
-     }// end Class
+     }// end Base Class
 
      
      public class VehicalVan : Vehical
      {
           // Field
           private int _passengers;
+          private Vehical automobile;
 
           public VehicalVan()
           {
@@ -58,10 +61,16 @@ namespace VehicalClassDemo
                _passengers = people;  
           }
 
+          public VehicalVan(Vehical automobile)
+          {
+              // TODO: Complete member initialization
+              this.automobile = automobile;
+          }
+
           // Properties
           public int Passengers { get; set; }
 
-     }// end SuvVehical
+     }// end VanVehical
      
 
 
