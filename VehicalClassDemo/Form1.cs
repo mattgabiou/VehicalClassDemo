@@ -218,73 +218,45 @@ namespace VehicalClassDemo
                // Resize the form
                myFormVehicalForm.Size = new Size(555, 425);
                
-               // Display the form
-              // myFormVehicalForm.ShowDialog();
-
 
                foreach (Vehical automobile in ListVehicals)
                {
+                   
+                   // Add the properties of each vehical to the form
                     myFormVehicalForm.labelMakeData.Text = automobile.Make;
                     myFormVehicalForm.labelModelData.Text = automobile.Model;
                     myFormVehicalForm.labelPriceData.Text = automobile.Price;
-                    myFormVehicalForm.labelYearData.Text = automobile.Year;  
-
-
-
+                    myFormVehicalForm.labelYearData.Text = automobile.Year;
+                    myFormVehicalForm.labelPassengersData.Text = "N/A";
   
                     // Add Vehical Specific Information
-                    // Determine what vehical type is selected in combobox
-                    /* Small Car(Luxuries) Truck(Tow Power) Suv(Options) Van(Passengers) Compact(MPG) Sports Car(Accelleration)
-                    */
+                    // Small Car(Luxuries) Truck(Tow Power) Suv(Options) Van(Passengers) Compact(MPG) Sports Car(Accelleration)
+                    
+                    
                     string selectedVehcialType = automobile.Type;
-                    //MessageBox.Show(selectedVehcialType);
                     switch (selectedVehcialType)
                     {
                          case "Van":
-                              // Create Passengers label. Horizontal is first, then Vertical
-                              Label labelPassengersShow = new Label();
-                              labelPassengersShow.Location = new Point(12, 130);
-                              labelPassengersShow.AutoSize = true;
-                              labelPassengersShow.Text = "Passengers:";
-                              myFormVehicalForm.Controls.Add(labelPassengersShow);
-
-
-
-
-                              // Create Passengers label with value
-                              Label labelPassengersShowAmount = new Label();
-                              labelPassengersShowAmount.Location = new Point(120, 130);
-                            labelPassengersShowAmount.Update();
-  
-                              // Trouble with showing passenger value on form
-                              VehicalVan myVan = (VehicalVan)automobile;
-                              labelPassengersShowAmount.Text = myVan.Passengers.ToString();
-                            MessageBox.Show("Passenger total is: " + myVan.Passengers.ToString()); // This is getting the correct amount
-                            MessageBox.Show("labelPassenger show amount is: " + labelPassengersShowAmount.Text);
-                            // Correct info comes to here
-
-
-                           
-                            myFormVehicalForm.Controls.Add(labelPassengersShowAmount); // There is something wrong with the form not displaying the new total
-                            labelPassengersShowAmount.Update();
-
-
+                            // Get Van data and put it into label
+                              VehicalVan myVan = (VehicalVan)automobile; // Converts automobile to VehicalVan type
+                              myFormVehicalForm.labelPassengersData.Text = myVan.Passengers.ToString();  
+                        
                             break;
                          default:
-                              
-                              
+        
                               break;                    
-                    }
+                    }// end switch
+
                     // Display the data on each vehical
-                   myFormVehicalForm.Refresh();
                     myFormVehicalForm.ShowDialog();
-                    myFormVehicalForm.Refresh();
-               }
 
-               
+               }// end forEach loop
+          }// end buttonShow.Click
 
-              
-          }
+
+
+
+
           private void clearBoxes()
           {
                int textBoxCount = TextBoxList.Count;
@@ -315,8 +287,14 @@ namespace VehicalClassDemo
                    case "Van":
                        //MessageBox.Show(TextBoxList.Last);
                        //MessageBox.Show(TextBoxList[4].Text);
+                       // If User leaves textbox for passengers blank
+                       if (TextBoxList[4].Text == "")
+                           TextBoxList[4].Text = "0";
+
                          ListVehicals.Add(new VehicalVan()
                          {
+                             
+
                               Type = comboBoxVehicalType.Text,
                               Make = TextBoxList[0].Text,
                               Model = TextBoxList[1].Text,
